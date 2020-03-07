@@ -1,6 +1,8 @@
 [
     {
         "name": "yamini",
-        "id": 2
+        "id": 2,
+        "age": 23,
+        "address": "Delhi"
     }
 ]
