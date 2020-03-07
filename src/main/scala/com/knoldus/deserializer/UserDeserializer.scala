@@ -1,20 +1,24 @@
 package com.knoldus.deserializer
 
-import com.fasterxml.jackson.databind.ObjectMapper
+import java.io.{ByteArrayInputStream, ObjectInputStream}
+
+import com.knoldus.CustomException
 import com.knoldus.model.User
 import org.apache.kafka.common.serialization.Deserializer
 
 class UserDeserializer extends Deserializer[User] {
   override def deserialize(arg0: String, arg1: Array[Byte]): User = {
-    val mapper = new ObjectMapper
-    var user = User("", -1)
     try {
-      user = mapper.readValue(arg1, classOf[User])
+      val byteIn = new ByteArrayInputStream(arg1)
+      val objIn = new ObjectInputStream(byteIn)
+      val obj = objIn.readObject().asInstanceOf[User]
+      byteIn.close()
+      objIn.close()
+      obj
     }
     catch {
-      case e: Exception =>
-        e.printStackTrace()
+      case e: Exception => e.printStackTrace()
+        throw new CustomException("Cannot Deserialize.")
     }
-    user
   }
 }

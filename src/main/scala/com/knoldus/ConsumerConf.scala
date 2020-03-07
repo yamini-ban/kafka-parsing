@@ -1,6 +1,6 @@
 package com.knoldus
 
-class ConsumerConfig {
+object ConsumerConf {
   val CONSUMER_SERVER = "bootstrap.servers"
   val CONSUMER_PORT = "localhost:9092"
   val KEY_DESERIALIZER = "key.deserializer"
